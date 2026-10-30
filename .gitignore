@@ -1,0 +1,32 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+data/*.db
+.pytest_cache/
+*.zip
+
+# Private environment files
+.env
+.env.*
+!.env.example
+
+# Python environment and cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Local uploads
+uploads/
+
+# Operating system files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LaunchMate AI</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<aside class="side" aria-label="Main navigation">
+  <div class="brand"><span class="logo">L</span><div><b>LaunchMate</b><small>Opportunity scout</small></div></div>
+  <nav id="nav">
+    <button data-view="dashboard" class="on">Dashboard</button>
+    <button data-view="research">Research</button>
+    <button data-view="opps">Opportunities</button>
+    <button data-view="tasks">Tasks</button>
+    <button data-view="profile">Profile &amp; data</button>
+    <button data-view="status">Connections</button>
+  </nav>
+  <div class="side-foot"><span id="modeBadge" class="badge demo">DEMO MODE</span>
+    <button id="themeBtn" class="ghost">Toggle theme</button></div>
+</aside>
+<main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <section id="v-dashboard" class="view">
+    <h1>Dashboard</h1>
+    <div id="stats" class="grid4"></div>
+    <div class="row"><button id="qaResearch">New research</button><button id="qaSample" class="ghost">Load sample workspace</button><button id="qaTask" class="ghost">Add task</button></div>
+    <div class="cols"><div class="card"><h2>Next 7 days</h2><div id="week"></div></div>
+    <div class="card"><h2>Upcoming deadlines</h2><div id="deadlines"></div></div></div>
+    <div class="cols"><div class="card"><h2>Recent research runs</h2><div id="runs"></div></div>
+    <div class="card"><h2>Activity</h2><div id="activity"></div></div></div>
+  </section>
+  <section id="v-research" class="view" hidden>
+    <h1>Research center</h1>
+    <p class="note">Results come from live web search when TAVILY_API_KEY is set. Without it you see clearly labelled DEMO DATA.</p>
+    <form id="rForm" class="card form">
+      <label>Type<select name="kind"><option>hackathon</option><option>internship</option><option>scholarship</option><option>other</option></select></label>
+      <label>Keywords &amp; interests<input name="keywords" placeholder="AI agents, climate, fintech"></label>
+      <label>Skills &amp; experience<input name="skills" placeholder="Python, FastAPI, React"></label>
+      <label>Location<input name="location" placeholder="India, Europe, anywhere"></label>
+      <label>Format<select name="mode"><option>any</option><option>online</option><option>in-person</option></select></label>
+      <label>Deadline preference<input name="deadline_pref" placeholder="within 2 months"></label>
+      <label class="wide">Application or project goal<input name="goal" placeholder="Build an AI agent that..."></label>
+      <button id="rBtn" type="submit">Run research</button>
+    </form>
+    <div id="stages"></div>
+  </section>
+  <section id="v-opps" class="view" hidden>
+    <h1>Opportunities</h1>
+    <div class="row"><select id="oFilter"><option value="active">Active</option><option value="saved">Saved</option><option value="dismissed">Dismissed</option></select>
+      <button id="cmpBtn" class="ghost">Compare selected</button><a href="/api/export/opportunities.csv" class="btn ghost">Export CSV</a></div>
+    <div id="cmp"></div><div id="oList"></div>
+    <h2>Generated documents</h2><div id="docs"></div>
+  </section>
+  <section id="v-tasks" class="view" hidden>
+    <h1>Tasks</h1>
+    <form id="tForm" class="card form">
+      <label class="wide">Title<input name="title" required maxlength="300"></label>
+      <label>Opportunity<select name="opportunity_id" id="tOpp"><option value="">None</option></select></label>
+      <label>Priority<select name="priority"><option>medium</option><option>high</option><option>low</option></select></label>
+      <label>Due<input type="date" name="due"></label>
+      <label>Status<select name="status"><option>todo</option><option>doing</option><option>done</option></select></label>
+      <input type="hidden" name="id"><button type="submit" id="tBtn">Add task</button>
+    </form>
+    <div class="row"><select id="tFilter"><option value="all">All</option><option value="todo">To do</option><option value="doing">Doing</option><option value="done">Done</option><option value="overdue">Overdue</option><option value="week">Next 7 days</option></select>
+      <a href="/api/export/tasks.csv" class="btn ghost">Export CSV</a></div>
+    <div id="tList"></div>
+  </section>
+  <section id="v-profile" class="view" hidden>
+    <h1>Profile &amp; data</h1>
+    <p class="note">Everything stays in a local SQLite file. No account, no passwords.</p>
+    <form id="pForm" class="card form">
+      <label>Nickname<input name="nickname" maxlength="80"></label>
+      <label class="wide">Skills<textarea name="skills"></textarea></label>
+      <label class="wide">Interests<textarea name="interests"></textarea></label>
+      <label class="wide">Goals<textarea name="goals"></textarea></label>
+      <label class="wide">Experience<textarea name="experience"></textarea></label>
+      <button type="submit">Save profile</button>
+    </form>
+    <div class="card"><h2>Clear my data</h2><p class="note">Removes opportunities, tasks, documents, history and profile. Type DELETE to confirm.</p>
+      <div class="row"><input id="clrTxt" placeholder="DELETE"><button id="clrBtn" class="danger">Clear data</button></div></div>
+  </section>
+  <section id="v-status" class="view" hidden>
+    <h1>Connections</h1>
+    <p class="note">LIVE flags turn on only after a real successful request. Nothing here is simulated.</p>
+    <div id="statusBox" class="card"></div>
+    <button id="checkBtn">Run connection checks</button>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body></html>
